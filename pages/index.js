@@ -8,7 +8,7 @@ export default function Home() {
   const [childrenAges, setChildrenAges] = useState("");
   const [preferences, setPreferences] = useState("");
 
-  // State variable for the result
+  // State variables for the result and errors
   const [itinerary, setItinerary] = useState("");
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -16,14 +16,14 @@ export default function Home() {
   // Your FastAPI endpoint (replace with your actual Railway URL)
   const BACKEND_URL = "https://my-railway-app.up.railway.app"; 
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setErrorMessage("");
     setItinerary("");
 
     // Convert comma-separated ages into an array of ints
-    let childrenAgesArray: number[] = [];
+    let childrenAgesArray = [];
     if (childrenAges.trim().length > 0) {
       childrenAgesArray = childrenAges
         .split(",")
@@ -55,7 +55,7 @@ export default function Home() {
 
       const data = await response.json();
       setItinerary(data.itinerary_text || "No itinerary text returned.");
-    } catch (error: any) {
+    } catch (error) {
       setErrorMessage(error.message || "An error occurred");
     } finally {
       setLoading(false);
